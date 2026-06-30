@@ -12,6 +12,12 @@
   --green:#22c55e;--green2:#16a34a;--green-dim:#bbf7d0;
   --text:#e8f5ed;--muted:#6b9e7e;
 }
+/* LIGHT THEME — applied when <body> has class "light" */
+body.light{
+  --bg:#f4faf6;--surface:#ffffff;--card:#ffffff;--border:#d9ece1;
+  --green:#16a34a;--green2:#15803d;--green-dim:#166534;
+  --text:#0d2b1a;--muted:#5b7a68;
+}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
 
@@ -25,6 +31,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover{color:var(--green)}
 .nav-btn{background:var(--green);color:#000;border:none;border-radius:8px;padding:.5rem 1.2rem;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s}
 .nav-btn:hover{background:var(--green2);transform:translateY(-1px)}
+.theme-toggle{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;width:38px;height:38px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:.75rem;transition:border-color .2s,transform .15s}
+.theme-toggle:hover{border-color:var(--green);transform:translateY(-1px)}
+.nav-right{display:flex;align-items:center}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 6vw 60px;position:relative;overflow:hidden}
@@ -92,6 +101,40 @@ h1 em{font-style:normal;color:var(--green)}
 .sev-l{background:rgba(34,197,94,.12);color:var(--green)}
 .crop-tag{background:var(--surface);color:var(--muted);font-size:.72rem;font-weight:600;border-radius:999px;padding:.18rem .65rem;border:1px solid var(--border)}
 .no-results{text-align:center;padding:3rem 0;color:var(--muted);display:none}
+mark{background:rgba(34,197,94,.35);color:var(--text);border-radius:3px;padding:0 2px}
+
+/* CARE CHECKLIST */
+#checklist{padding:90px 6vw;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.checklist-box{margin-top:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2rem;max-width:560px}
+.checklist-add-row{display:flex;gap:.6rem;margin-bottom:1.25rem}
+.checklist-add-row input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.9rem;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.checklist-add-row input:focus{border-color:var(--green)}
+.checklist-add-row button{background:var(--green);color:#000;border:none;border-radius:10px;padding:.7rem 1.3rem;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s}
+.checklist-add-row button:hover{background:var(--green2)}
+.checklist-items{display:flex;flex-direction:column;gap:.6rem}
+.checklist-item{display:flex;align-items:center;gap:.75rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem}
+.checklist-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.checklist-item span{flex:1;font-size:.9rem;color:var(--text)}
+.checklist-item.done span{text-decoration:line-through;color:var(--muted)}
+.checklist-del{background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:.2rem .4rem;border-radius:6px;transition:color .2s}
+.checklist-del:hover{color:#f87171}
+.checklist-empty{color:var(--muted);font-size:.88rem;text-align:center;padding:1rem 0}
+
+/* SEVERITY QUIZ */
+#quiz{padding:90px 6vw}
+.quiz-box{margin-top:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2rem;max-width:600px}
+.quiz-q{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:1rem}
+.quiz-options{display:flex;flex-direction:column;gap:.6rem}
+.quiz-opt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;font-size:.9rem;color:var(--text);text-align:left;cursor:pointer;transition:border-color .2s,background .2s}
+.quiz-opt:hover{border-color:var(--green);background:rgba(34,197,94,.06)}
+.quiz-progress{display:flex;gap:.4rem;margin-bottom:1.5rem}
+.quiz-dot{height:4px;flex:1;border-radius:999px;background:var(--border)}
+.quiz-dot.active{background:var(--green)}
+.quiz-result{display:none;text-align:center}
+.quiz-result .emoji{font-size:3rem;display:block;margin-bottom:1rem}
+.quiz-result h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:.5rem}
+.quiz-result p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:1.25rem}
+.quiz-restart{background:var(--green);color:#000;border:none;border-radius:10px;padding:.7rem 1.5rem;font-size:.9rem;font-weight:700;cursor:pointer}
 
 /* FAQ */
 #faq{padding:90px 6vw}
@@ -159,9 +202,14 @@ footer p{font-size:.82rem;color:var(--muted)}
     <li><a href="#scanner">Scanner</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#library">Diseases</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="#quiz">Quiz</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <button class="nav-btn" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">Browse Diseases</button>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle dark/light theme">🌙</button>
+    <button class="nav-btn" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">Browse Diseases</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -243,6 +291,42 @@ footer p{font-size:.82rem;color:var(--muted)}
   <div class="no-results" id="no-results">No diseases match your search.</div>
 </section>
 
+<!-- CARE CHECKLIST (own feature: localStorage to-do list) -->
+<section id="checklist">
+  <div class="sec-eyebrow reveal">✅ Plant Care</div>
+  <h2 class="sec-title reveal">My Care Checklist</h2>
+  <p class="sec-sub reveal">Add your own watering, fertilizing, or pruning reminders. Saved in your browser, so they stay even after you close the tab.</p>
+
+  <div class="checklist-box reveal">
+    <div class="checklist-add-row">
+      <input type="text" id="checklist-input" placeholder="e.g. Water tomato plant" onkeydown="if(event.key==='Enter')addChecklistItem()"/>
+      <button onclick="addChecklistItem()">Add</button>
+    </div>
+    <div class="checklist-items" id="checklist-items"></div>
+  </div>
+</section>
+
+<!-- SEVERITY QUIZ (own feature: simple if/else logic quiz) -->
+<section id="quiz">
+  <div class="sec-eyebrow reveal">🧪 Quick Check</div>
+  <h2 class="sec-title reveal">Leaf Symptom Quiz</h2>
+  <p class="sec-sub reveal">Answer 3 quick questions about what you're seeing on your leaf to get a likely category — not a diagnosis, just a starting point.</p>
+
+  <div class="quiz-box reveal">
+    <div class="quiz-progress" id="quiz-progress"></div>
+    <div id="quiz-question-wrap">
+      <div class="quiz-q" id="quiz-q-text"></div>
+      <div class="quiz-options" id="quiz-options"></div>
+    </div>
+    <div class="quiz-result" id="quiz-result">
+      <span class="emoji" id="quiz-result-emoji"></span>
+      <h3 id="quiz-result-title"></h3>
+      <p id="quiz-result-desc"></p>
+      <button class="quiz-restart" onclick="startQuiz()">🔄 Try Again</button>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section id="faq">
   <div class="sec-eyebrow reveal">❓ FAQ</div>
@@ -266,6 +350,8 @@ footer p{font-size:.82rem;color:var(--muted)}
     <a href="#scanner">Scanner</a>
     <a href="#how">How it Works</a>
     <a href="#library">Diseases</a>
+    <a href="#checklist">Checklist</a>
+    <a href="#quiz">Quiz</a>
     <a href="#faq">FAQ</a>
   </div>
   <p>© 2025 PlantSafe AI</p>
@@ -348,15 +434,19 @@ crops.forEach(c=>{
 
 // ── RENDER LIBRARY ──
 const grid = document.getElementById('lib-grid');
-function renderLibrary(list){
+function renderLibrary(list, query){
+  query = query || '';
   grid.innerHTML = '';
   document.getElementById('no-results').style.display = list.length ? 'none' : 'block';
   list.forEach((d)=>{
     const i = diseases.indexOf(d);
     const el = document.createElement('div');
     el.className = 'dcard reveal visible';
-    el.innerHTML = `<span class="dcard-emoji">${d.emoji}</span><h4>${d.name}</h4><p>${d.short}</p>
-      <div class="dcard-meta"><span class="sev sev-${d.sev}">${d.sev==='h'?'High':d.sev==='m'?'Medium':'Low'} Risk</span><span class="crop-tag">${d.crop}</span></div>`;
+    // highlightMatch() wraps matching search text in <mark> so it's visibly highlighted
+    const nameHtml = highlightMatch(d.name, query);
+    const cropHtml = highlightMatch(d.crop, query);
+    el.innerHTML = `<span class="dcard-emoji">${d.emoji}</span><h4>${nameHtml}</h4><p>${d.short}</p>
+      <div class="dcard-meta"><span class="sev sev-${d.sev}">${d.sev==='h'?'High':d.sev==='m'?'Medium':'Low'} Risk</span><span class="crop-tag">${cropHtml}</span></div>`;
     el.onclick = () => openDisease(i);
     grid.appendChild(el);
   });
@@ -366,7 +456,7 @@ function filterLibrary(){
   let list = diseases;
   if(activeCrop !== 'All') list = list.filter(d=>d.crop===activeCrop);
   if(q) list = list.filter(d=>d.name.toLowerCase().includes(q) || d.crop.toLowerCase().includes(q));
-  renderLibrary(list);
+  renderLibrary(list, q);
 }
 renderLibrary(diseases);
 
@@ -415,7 +505,187 @@ function toggleFaq(i){
   }
 }
 
-// ── TOAST ──
+// ════════════════════════════════════════════
+// FEATURE 1: DARK / LIGHT THEME TOGGLE
+// ════════════════════════════════════════════
+// We check localStorage to remember the user's choice between visits.
+// localStorage is a small key-value storage built into the browser.
+function toggleTheme(){
+  const isLight = document.body.classList.toggle('light'); // adds/removes "light" class, returns true if added
+  document.getElementById('theme-btn').textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('ps_theme', isLight ? 'light' : 'dark'); // remember choice
+}
+// On page load, check if user previously picked light mode
+if(localStorage.getItem('ps_theme') === 'light'){
+  document.body.classList.add('light');
+  document.getElementById('theme-btn').textContent = '☀️';
+}
+
+// ════════════════════════════════════════════
+// FEATURE 2: PLANT CARE CHECKLIST (saved with localStorage)
+// ════════════════════════════════════════════
+// We store the list of tasks as a JSON array string in localStorage.
+// Each task is an object: { text: "Water tomato", done: false }
+function getChecklist(){
+  const raw = localStorage.getItem('ps_checklist');
+  return raw ? JSON.parse(raw) : []; // if nothing saved yet, start with empty list
+}
+function saveChecklist(items){
+  localStorage.setItem('ps_checklist', JSON.stringify(items));
+}
+function renderChecklist(){
+  const items = getChecklist();
+  const wrap = document.getElementById('checklist-items');
+  wrap.innerHTML = '';
+  if(items.length === 0){
+    wrap.innerHTML = '<p class="checklist-empty">No tasks yet — add your first plant care reminder above.</p>';
+    return;
+  }
+  items.forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = 'checklist-item' + (item.done ? ' done' : '');
+    row.innerHTML = `
+      <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleChecklistItem(${index})"/>
+      <span>${item.text}</span>
+      <button class="checklist-del" onclick="deleteChecklistItem(${index})">✕</button>
+    `;
+    wrap.appendChild(row);
+  });
+}
+function addChecklistItem(){
+  const input = document.getElementById('checklist-input');
+  const text = input.value.trim();
+  if(!text){ showToast('⚠️ Type a task first'); return; }
+  const items = getChecklist();
+  items.push({ text: text, done: false });
+  saveChecklist(items);
+  input.value = '';
+  renderChecklist();
+  showToast('✅ Task added');
+}
+function toggleChecklistItem(index){
+  const items = getChecklist();
+  items[index].done = !items[index].done; // flip true/false
+  saveChecklist(items);
+  renderChecklist();
+}
+function deleteChecklistItem(index){
+  const items = getChecklist();
+  items.splice(index, 1); // remove 1 item at this position
+  saveChecklist(items);
+  renderChecklist();
+}
+renderChecklist(); // run once on page load to show saved tasks
+
+// ════════════════════════════════════════════
+// FEATURE 3: LEAF SYMPTOM QUIZ (simple if/else style logic)
+// ════════════════════════════════════════════
+// 3 questions, each answer pushes a "score" toward a category.
+// At the end we look at which category got the most points.
+const quizQuestions = [
+  {
+    text: 'What color are the spots or marks on the leaf?',
+    options: [
+      { label: 'Brown or black spots with rings', tag: 'fungal' },
+      { label: 'Yellow patches or streaks', tag: 'viral' },
+      { label: 'White powdery coating', tag: 'mildew' },
+      { label: 'No spots — leaf looks healthy', tag: 'healthy' }
+    ]
+  },
+  {
+    text: 'Where on the plant did you first notice the problem?',
+    options: [
+      { label: 'Lower / older leaves first', tag: 'fungal' },
+      { label: 'New growth or young leaves', tag: 'viral' },
+      { label: 'Scattered randomly all over', tag: 'mildew' },
+      { label: 'Nowhere — just checking', tag: 'healthy' }
+    ]
+  },
+  {
+    text: 'How is the weather been lately?',
+    options: [
+      { label: 'Wet, humid, or rainy', tag: 'fungal' },
+      { label: 'Hot and dry', tag: 'viral' },
+      { label: 'Warm days, cool humid nights', tag: 'mildew' },
+      { label: 'Normal, nothing unusual', tag: 'healthy' }
+    ]
+  }
+];
+const quizResults = {
+  fungal: { emoji: '🍂', title: 'Likely a Fungal Disease', desc: 'Your answers point toward a fungal infection (like blight or leaf spot). These usually develop in wet, humid conditions and start on older leaves. Check our Disease Library for fungal diseases matching your crop.' },
+  viral: { emoji: '🦠', title: 'Possible Viral Infection', desc: 'Streaks or patches on new growth can be a sign of viral infection, often spread by insects or contaminated tools. Unfortunately most plant viruses have no cure — focus on isolating the plant.' },
+  mildew: { emoji: '☁️', title: 'Likely Powdery or Downy Mildew', desc: 'A powdery or fuzzy coating that appears randomly is a classic sign of mildew, common in warm days with cool humid nights. Improve airflow around your plant and consider a fungicide spray.' },
+  healthy: { emoji: '🌿', title: 'Your Plant Sounds Healthy!', desc: 'Based on your answers, there\'s no clear sign of disease. Keep up your current care routine and check back if anything changes.' }
+};
+let quizStep = 0;
+let quizScores = { fungal: 0, viral: 0, mildew: 0, healthy: 0 };
+
+function startQuiz(){
+  quizStep = 0;
+  quizScores = { fungal: 0, viral: 0, mildew: 0, healthy: 0 };
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-question-wrap').style.display = 'block';
+  showQuizQuestion();
+}
+function showQuizQuestion(){
+  // update progress dots
+  const progress = document.getElementById('quiz-progress');
+  progress.innerHTML = quizQuestions.map((_, i) =>
+    `<div class="quiz-dot${i <= quizStep ? ' active' : ''}"></div>`
+  ).join('');
+
+  const q = quizQuestions[quizStep];
+  document.getElementById('quiz-q-text').textContent = `Q${quizStep + 1}. ${q.text}`;
+  const optsWrap = document.getElementById('quiz-options');
+  optsWrap.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt.label;
+    btn.onclick = () => answerQuiz(opt.tag);
+    optsWrap.appendChild(btn);
+  });
+}
+function answerQuiz(tag){
+  quizScores[tag]++; // add a point to whichever category this answer belongs to
+  quizStep++;
+  if(quizStep < quizQuestions.length){
+    showQuizQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+function finishQuiz(){
+  // find the tag with the highest score
+  let winner = 'healthy';
+  let highest = -1;
+  for(const tag in quizScores){
+    if(quizScores[tag] > highest){
+      highest = quizScores[tag];
+      winner = tag;
+    }
+  }
+  const result = quizResults[winner];
+  document.getElementById('quiz-question-wrap').style.display = 'none';
+  document.getElementById('quiz-result').style.display = 'block';
+  document.getElementById('quiz-result-emoji').textContent = result.emoji;
+  document.getElementById('quiz-result-title').textContent = result.title;
+  document.getElementById('quiz-result-desc').textContent = result.desc;
+}
+startQuiz(); // run once on page load to show the first question
+
+// ════════════════════════════════════════════
+// FEATURE 4: SEARCH WITH HIGHLIGHTED MATCHES
+// ════════════════════════════════════════════
+// We wrap the matching text in <mark> tags so the browser highlights it.
+// This replaces the plain filterLibrary() text matching with a version
+// that also highlights what matched inside each card.
+function highlightMatch(text, query){
+  if(!query) return text;
+  const regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
 let tt;
 function showToast(msg){
   const t = document.getElementById('toast');
