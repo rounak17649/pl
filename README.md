@@ -30,9 +30,7 @@ Each link is the official Teachable Machine sharable export — you can open any
 - **Disease Library** — 40+ diseases, searchable with highlighted matches, filterable by crop
 - **Leaf Symptom Quiz** — answer 3 questions, get a likely disease category
 - **Care Checklist** — add your own watering/care reminders, saved in browser storage
-- **Dark/Light Theme Toggle** — saved across visits
-- **FAQ** section
-
+  
 ## Stack
 
 HTML · CSS · Vanilla JS · TensorFlow.js · Teachable Machine
