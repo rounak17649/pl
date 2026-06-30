@@ -15,12 +15,12 @@ I trained 6 separate image classification models myself using **Google Teachable
 
 | Plant | Model |
 |---|---|
-| 🍅 Tomato | https://teachablemachine.withgoogle.com/models/z2niuamRf/ |
-| 🍎 Apple | https://teachablemachine.withgoogle.com/models/X4CmAVvRJ/ |
-| 🥔 Potato | https://teachablemachine.withgoogle.com/models/MIMDs8u73/ |
-| 🍇 Grape | https://teachablemachine.withgoogle.com/models/67ZHczOkq/ |
-| 🌽 Corn | https://teachablemachine.withgoogle.com/models/c45p88bIJ/ |
-| 🫑 Bell Pepper | https://teachablemachine.withgoogle.com/models/81ubzV8J9/ |
+|  Tomato | https://teachablemachine.withgoogle.com/models/z2niuamRf/ |
+|  Apple | https://teachablemachine.withgoogle.com/models/X4CmAVvRJ/ |
+|  Potato | https://teachablemachine.withgoogle.com/models/MIMDs8u73/ |
+|  Grape | https://teachablemachine.withgoogle.com/models/67ZHczOkq/ |
+|  Corn | https://teachablemachine.withgoogle.com/models/c45p88bIJ/ |
+|  Bell Pepper | https://teachablemachine.withgoogle.com/models/81ubzV8J9/ |
 
 Each link is the official Teachable Machine sharable export — you can open any of them to see the model's training summary directly on Google's platform.
 
