@@ -1,24 +1,27 @@
 # PlantSafe AI
 
-A plant disease reference platform. Browse and search 40+ plant diseases with symptoms, causes, treatment, and prevention info.
+A plant disease reference platform. Browse 40+ plant diseases, take a symptom quiz, track care tasks, and switch between dark/light themes.
 
 ## Run it
 
 ```bash
-git clone https://github.com/rounak17649/plantsafe-ai.git
-cd plantsafe-ai
+git clone https://github.com/rounak17649/pl.git
+cd plantsafe-ai new
 open index.html
 ```
 
-## Current status
+## Features
 
--  Disease library — 40+ diseases, searchable and filterable by crop
--  FAQ section
--  AI leaf scanner — coming soon, not yet functional
+- **Disease Library** — 40+ diseases, searchable with highlighted matches, filterable by crop
+- **Leaf Symptom Quiz** — answer 3 questions, get a likely disease category
+- **Care Checklist** — add your own watering/care reminders, saved in browser storage
+- **Dark/Light Theme Toggle** — saved across visits
+- **FAQ** section
+- AI leaf scanner — coming soon, not yet functional
 
 ## Stack
 
-HTML · CSS · Vanilla JS
+HTML · CSS · Vanilla JS · localStorage
 
 ## Author
 
