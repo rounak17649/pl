@@ -68,6 +68,53 @@ h1 em{font-style:normal;color:var(--green)}
 .soon-features{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-top:1.75rem}
 .soon-feature{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.45rem 1rem;font-size:.82rem;color:var(--muted)}
 
+/* REAL SCANNER UI */
+.plant-picker{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.5rem}
+.plant-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.4rem;cursor:pointer;display:flex;align-items:center;gap:.6rem;transition:border-color .2s,transform .2s;position:relative}
+.plant-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.plant-card.active{border-color:var(--green);background:rgba(34,197,94,.08)}
+.plant-card.disabled{opacity:.45;cursor:not-allowed}
+.plant-card.disabled:hover{transform:none;border-color:var(--border)}
+.plant-card .emoji{font-size:1.4rem}
+.plant-card .name{font-size:.92rem;font-weight:600;color:var(--text)}
+.plant-card .badge{position:absolute;top:-8px;right:-8px;background:#f59e0b;color:#000;font-size:.62rem;font-weight:700;padding:.15rem .45rem;border-radius:999px}
+
+.scan-area{display:none;margin-top:2.5rem;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+.scan-area.show{display:grid}
+.drop-area{border:2px dashed var(--border);border-radius:20px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:border-color .25s,background .25s;position:relative;background:var(--card)}
+.drop-area:hover,.drop-area.over{border-color:var(--green);background:rgba(34,197,94,.04)}
+.drop-area input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop-icon{font-size:3.5rem;margin-bottom:1rem;display:block}
+.drop-area h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text)}
+.drop-area p{font-size:.88rem;color:var(--muted);margin-top:.35rem}
+.choose-btn{margin-top:1.25rem;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.6rem 1.4rem;font-size:.9rem;font-weight:600;cursor:pointer;transition:border-color .2s,color .2s}
+.choose-btn:hover{border-color:var(--green);color:var(--green)}
+#preview-wrap{display:none;margin-top:1.5rem}
+.preview-img-box{border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+#leaf-img{width:100%;max-height:280px;object-fit:cover;display:block}
+.clear-btn{width:100%;margin-top:.6rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:.7rem;font-size:.88rem;cursor:pointer;transition:border-color .2s,color .2s}
+.clear-btn:hover{border-color:#ef4444;color:#ef4444}
+.btn-main{background:var(--green);color:#000;border:none;border-radius:10px;padding:.9rem 1.5rem;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;margin-top:1rem;transition:background .2s}
+.btn-main:hover{background:var(--green2)}
+.btn-main:disabled{opacity:.5;cursor:not-allowed}
+
+.result-box{background:var(--card);border-radius:20px;padding:2rem;border:1px solid var(--border);min-height:300px;display:flex;flex-direction:column;justify-content:center}
+.result-empty{text-align:center;color:var(--muted)}
+.result-empty .big{font-size:3rem;margin-bottom:1rem;display:block;opacity:.4}
+.loader{display:none;text-align:center;padding:2rem 0}
+.loader-ring{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.result-out{display:none}
+.pred-row{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.pred-name{flex:1;font-size:.92rem;font-weight:600;color:var(--text)}
+.pred-bar-wrap{flex:2;height:8px;background:var(--border);border-radius:999px;overflow:hidden}
+.pred-bar{height:100%;background:var(--green);border-radius:999px;transition:width .8s ease}
+.pred-pct{font-size:.85rem;color:var(--muted);width:42px;text-align:right}
+.top-result{text-align:center;padding-bottom:1.25rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.top-result .emoji{font-size:2.5rem}
+.top-result h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--text);margin-top:.4rem}
+.top-result span{font-size:.85rem;color:var(--green)}
+
 /* HOW IT WORKS */
 #how{padding:90px 6vw}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
@@ -192,6 +239,9 @@ footer p{font-size:.82rem;color:var(--muted)}
   .soon-box{padding:2.5rem 1.5rem}
 }
 </style>
+<!-- Teachable Machine needs these two libraries to run the trained model in the browser -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
 
@@ -230,22 +280,52 @@ footer p{font-size:.82rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- SCANNER COMING SOON -->
+<!-- AI SCANNER (Teachable Machine powered) -->
 <section id="scanner">
   <div class="sec-eyebrow">🔬 AI Scanner</div>
   <h2 class="sec-title">Upload & Detect</h2>
-  <p class="sec-sub">Snap a photo of any leaf and get an instant disease diagnosis.</p>
+  <p class="sec-sub">Step 1: pick your plant. Step 2: upload a leaf photo. Models marked "Coming Soon" aren't trained yet.</p>
 
-  <div class="soon-box">
-    <span class="soon-icon">🌿</span>
-    <div class="soon-pill">🚧 Coming Soon</div>
-    <h3>AI Leaf Scanner Launching Soon</h3>
-    <p>We're putting the finishing touches on our AI-powered leaf scanner. Soon you'll be able to upload a photo and get an instant, accurate diagnosis right here.</p>
-    <div class="soon-features">
-      <span class="soon-feature">📷 Instant Photo Upload</span>
-      <span class="soon-feature">🎯 Confidence Scoring</span>
-      <span class="soon-feature">💊 Treatment Plans</span>
-      <span class="soon-feature">📊 Severity Levels</span>
+  <!-- Step 1: choose which plant model to use -->
+  <div class="plant-picker" id="plant-picker"></div>
+
+  <!-- Step 2: upload + result (appears after picking a plant with a ready model) -->
+  <div class="scan-area" id="scan-area">
+    <div>
+      <div class="drop-area" id="drop-area"
+        ondragover="event.preventDefault();this.classList.add('over')"
+        ondragleave="this.classList.remove('over')"
+        ondrop="onDrop(event)">
+        <input type="file" id="file-in" accept="image/*" onchange="loadFile(this.files[0])">
+        <span class="drop-icon">🌿</span>
+        <h3>Drag your leaf photo here</h3>
+        <p>JPG or PNG of a single leaf</p>
+        <button class="choose-btn" onclick="event.stopPropagation();document.getElementById('file-in').click()">Choose from device</button>
+      </div>
+      <div id="preview-wrap">
+        <div class="preview-img-box"><img id="leaf-img" src="" alt="Leaf"/></div>
+        <button class="btn-main" id="analyse-btn" onclick="runPrediction()">🔍 Analyse This Leaf</button>
+        <button class="clear-btn" onclick="clearLeaf()">✕ Remove photo</button>
+      </div>
+    </div>
+
+    <div class="result-box">
+      <div class="result-empty" id="r-empty">
+        <span class="big">🍃</span>
+        <p>Upload a leaf photo and hit <strong style="color:var(--text)">Analyse</strong> to see results here.</p>
+      </div>
+      <div class="loader" id="r-loader">
+        <div class="loader-ring"></div>
+        <p style="font-size:.9rem;color:var(--muted)">Running the model…</p>
+      </div>
+      <div class="result-out" id="r-out">
+        <div class="top-result">
+          <span class="emoji">🌿</span>
+          <h3 id="top-pred-name">—</h3>
+          <span id="top-pred-pct">—</span>
+        </div>
+        <div id="all-preds"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -506,8 +586,142 @@ function toggleFaq(i){
 }
 
 // ════════════════════════════════════════════
-// FEATURE 1: DARK / LIGHT THEME TOGGLE
+// AI SCANNER — Teachable Machine integration
 // ════════════════════════════════════════════
+// PASTE YOUR MODEL URLS HERE once trained in Teachable Machine.
+// In Teachable Machine: Export Model → Tensorflow.js → Upload (sharable link)
+// You'll get a URL like: https://teachablemachine.withgoogle.com/models/XXXXXXX/
+// Paste it as the "url" below — leave it as "" if not trained yet (shows "Coming Soon").
+const plantModels = [
+  { id:'tomato', emoji:'🍅', name:'Tomato', url:'' },
+  { id:'apple',  emoji:'🍎', name:'Apple',  url:'https://teachablemachine.withgoogle.com/models/X4CmAVvRJ/' },
+  { id:'potato', emoji:'🥔', name:'Potato', url:'' },
+  { id:'grape',  emoji:'🍇', name:'Grape',  url:'' },
+  { id:'corn',   emoji:'🌽', name:'Corn',   url:'' }
+  // add more plants here following the same pattern
+];
+
+let currentModel = null;   // holds the loaded Teachable Machine model
+let currentPlant = null;   // which plant is currently selected
+let currentFile = null;    // the uploaded leaf photo file
+
+// Build the plant picker buttons from the list above
+const pickerWrap = document.getElementById('plant-picker');
+plantModels.forEach(plant => {
+  const hasModel = plant.url && plant.url.trim() !== '';
+  const card = document.createElement('div');
+  card.className = 'plant-card' + (hasModel ? '' : ' disabled');
+  card.innerHTML = `
+    <span class="emoji">${plant.emoji}</span>
+    <span class="name">${plant.name}</span>
+    ${hasModel ? '' : '<span class="badge">Soon</span>'}
+  `;
+  if(hasModel){
+    card.onclick = () => selectPlant(plant);
+  }
+  pickerWrap.appendChild(card);
+});
+
+async function selectPlant(plant){
+  currentPlant = plant;
+  // highlight the selected card
+  document.querySelectorAll('.plant-card').forEach(c => c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  document.getElementById('scan-area').classList.add('show');
+  resetResult();
+  clearLeaf();
+  showToast('⏳ Loading ' + plant.name + ' model…');
+
+  try {
+    // Teachable Machine model has two files: model.json and metadata.json
+    const modelURL = plant.url + 'model.json';
+    const metadataURL = plant.url + 'metadata.json';
+    currentModel = await tmImage.load(modelURL, metadataURL);
+    showToast('✅ ' + plant.name + ' model ready');
+  } catch(err) {
+    showToast('❌ Could not load model. Check the URL.');
+    console.error(err);
+  }
+}
+
+// ── File handling (same pattern as before, simplified) ──
+function onDrop(e){
+  e.preventDefault();
+  document.getElementById('drop-area').classList.remove('over');
+  const f = e.dataTransfer.files[0];
+  if(f && f.type.startsWith('image/')) loadFile(f);
+  else showToast('⚠️ Please drop an image file');
+}
+function loadFile(f){
+  if(!f) return;
+  currentFile = f;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('leaf-img').src = e.target.result;
+    document.getElementById('preview-wrap').style.display = 'block';
+    resetResult();
+  };
+  reader.readAsDataURL(f);
+}
+function clearLeaf(){
+  currentFile = null;
+  document.getElementById('preview-wrap').style.display = 'none';
+  document.getElementById('leaf-img').src = '';
+  document.getElementById('file-in').value = '';
+  resetResult();
+}
+function resetResult(){
+  document.getElementById('r-empty').style.display = 'block';
+  document.getElementById('r-loader').style.display = 'none';
+  document.getElementById('r-out').style.display = 'none';
+}
+
+// ── Run the actual prediction using the loaded Teachable Machine model ──
+async function runPrediction(){
+  if(!currentFile){ showToast('⚠️ Upload a leaf photo first'); return; }
+  if(!currentModel){ showToast('⚠️ Model still loading, wait a moment'); return; }
+
+  document.getElementById('r-empty').style.display = 'none';
+  document.getElementById('r-out').style.display = 'none';
+  document.getElementById('r-loader').style.display = 'block';
+
+  // Teachable Machine needs an actual <img> element to read pixels from
+  const imgEl = document.getElementById('leaf-img');
+
+  // predict() returns an array like:
+  // [{className:"Tomato_healthy", probability:0.91}, {className:"Early_blight", probability:0.06}, ...]
+  const predictions = await currentModel.predict(imgEl);
+
+  // sort highest confidence first
+  predictions.sort((a, b) => b.probability - a.probability);
+
+  showPredictionResult(predictions);
+}
+
+function showPredictionResult(predictions){
+  document.getElementById('r-loader').style.display = 'none';
+  document.getElementById('r-out').style.display = 'block';
+
+  const top = predictions[0];
+  const topPct = Math.round(top.probability * 100);
+  document.getElementById('top-pred-name').textContent = top.className.replace(/_/g, ' ');
+  document.getElementById('top-pred-pct').textContent = topPct + '% confidence';
+
+  // show a bar for every class, not just the top one, so the user sees the full picture
+  const allWrap = document.getElementById('all-preds');
+  allWrap.innerHTML = predictions.map(p => {
+    const pct = Math.round(p.probability * 100);
+    return `
+      <div class="pred-row">
+        <span class="pred-name">${p.className.replace(/_/g, ' ')}</span>
+        <div class="pred-bar-wrap"><div class="pred-bar" style="width:${pct}%"></div></div>
+        <span class="pred-pct">${pct}%</span>
+      </div>`;
+  }).join('');
+}
+
+
 // We check localStorage to remember the user's choice between visits.
 // localStorage is a small key-value storage built into the browser.
 function toggleTheme(){
