@@ -284,7 +284,7 @@ footer p{font-size:.82rem;color:var(--muted)}
 <section id="scanner">
   <div class="sec-eyebrow">🔬 AI Scanner</div>
   <h2 class="sec-title">Upload & Detect</h2>
-  <p class="sec-sub">Step 1: pick your plant. Step 2: upload a leaf photo. Models marked "Coming Soon" aren't trained yet.</p>
+  <p class="sec-sub">Step 1: pick your plant. Step 2: upload a leaf photo.</p>
 
   <!-- Step 1: choose which plant model to use -->
   <div class="plant-picker" id="plant-picker"></div>
@@ -593,11 +593,12 @@ function toggleFaq(i){
 // You'll get a URL like: https://teachablemachine.withgoogle.com/models/XXXXXXX/
 // Paste it as the "url" below — leave it as "" if not trained yet (shows "Coming Soon").
 const plantModels = [
-  { id:'tomato', emoji:'🍅', name:'Tomato', url:'' },
+  { id:'tomato', emoji:'🍅', name:'Tomato', url:'https://teachablemachine.withgoogle.com/models/z2niuamRf/' },
   { id:'apple',  emoji:'🍎', name:'Apple',  url:'https://teachablemachine.withgoogle.com/models/X4CmAVvRJ/' },
-  { id:'potato', emoji:'🥔', name:'Potato', url:'' },
-  { id:'grape',  emoji:'🍇', name:'Grape',  url:'' },
-  { id:'corn',   emoji:'🌽', name:'Corn',   url:'' }
+  { id:'potato', emoji:'🥔', name:'Potato', url:'https://teachablemachine.withgoogle.com/models/MIMDs8u73/' },
+  { id:'grape',  emoji:'🍇', name:'Grape',  url:'https://teachablemachine.withgoogle.com/models/67ZHczOkq/' },
+  { id:'corn',   emoji:'🌽', name:'Corn',   url:'https://teachablemachine.withgoogle.com/models/c45p88bIJ/' },
+  { id:'pepper', emoji:'🫑', name:'Bell Pepper', url:'https://teachablemachine.withgoogle.com/models/81ubzV8J9/' }
   // add more plants here following the same pattern
 ];
 
